@@ -1,4 +1,18 @@
-import rich # for psudo gui (pip install rich)
+import sys
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+
+def window():
+   app = QApplication(sys.argv)
+   w = QWidget()
+   b = QLabel(w)
+   b.setText("Hello World!")
+   w.setGeometry(500,500,500,500)
+   b.move(50,20)
+   w.setWindowTitle("PyQt5")
+   w.show()
+   sys.exit(app.exec_())
 
 def main():
     """
@@ -27,4 +41,5 @@ def main():
     """
 
 if __name__ == '__main__':
+    window()
     main()
