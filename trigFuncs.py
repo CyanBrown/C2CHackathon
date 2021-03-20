@@ -25,7 +25,8 @@ def tan(angle, measure):
         return math.tan(angle)
 
 
-def arcsin(l, measure):
+def arcsin(length, measure):
+    l = length
     if measure == "deg":
         return math.degrees(math.asin(l))
 
@@ -33,7 +34,9 @@ def arcsin(l, measure):
         return math.asin(l)
 
 
-def arccos(l, measure):
+def arccos(length, measure):
+    l = length
+
     if measure == "deg":
         return math.degrees(math.acos(l))
 
@@ -41,7 +44,10 @@ def arccos(l, measure):
         return math.acos(l)
 
 
-def arctan(l, measure):
+def arctan(length, measure):
+
+    l = length
+
     if measure == "deg":
         return math.degrees(math.atan(l))
 

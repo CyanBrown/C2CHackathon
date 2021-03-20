@@ -63,79 +63,79 @@ class NthPolygon:
         return f"\nPerimeter: {self.perimeter}\nArea: {self.area}\n"
 
 
-class Triangle:
-    def __init__(self, measure, base=None, height=None, A=None, B=None, C=None, a=None, b=None, c=None):
-        self.error_code = "valid"
+# class Triangle:
+#     def __init__(self, measure, base=None, height=None, A=None, B=None, C=None, a=None, b=None, c=None):
+#         self.error_code = "valid"
 
-        self.base = base
-        self.height = height
+#         self.base = base
+#         self.height = height
 
-        self.angles = [A,B,C]
-        self.sides = [a,b,c]
+#         self.angles = [A,B,C]
+#         self.sides = [a,b,c]
 
-        angle_size = 0
+#         angle_size = 0
 
-        for ang in range(len(self.angles)):
-            if self.angles[ang] is not None:
-                angle_size+=self.angles[ang]
+#         for ang in range(len(self.angles)):
+#             if self.angles[ang] is not None:
+#                 angle_size+=self.angles[ang]
 
-        if angle_size >= 180:
-            if self.angles.count(None)>=1:
-                self.error_code = "invalid"
-                return
+#         if angle_size >= 180:
+#             if self.angles.count(None)>=1:
+#                 self.error_code = "invalid"
+#                 return
 
-            elif angle_size>180:
-                self.error_code  = "invalid"
-                return
+#             elif angle_size>180:
+#                 self.error_code  = "invalid"
+#                 return
 
-        if self.angles.count(None) == 1:
-            idx = self.angles.index(None)
-            l = self.angles.copy()
-            l.remove(None)
-            self.angles[idx] = 180 - math.fsum(l)
+#         if self.angles.count(None) == 1:
+#             idx = self.angles.index(None)
+#             l = self.angles.copy()
+#             l.remove(None)
+#             self.angles[idx] = 180 - math.fsum(l)
 
-        if base and height:
-            self.area = base*height*.5
+#         if base and height:
+#             self.area = base*height*.5
 
-        working_idx = 0
+#         working_idx = 0
 
-        for i in range(3):
-            if self.angles[i] and self.sides[i]:
-                working_idx = i
-                break
+#         for i in range(3):
+#             if self.angles[i] and self.sides[i]:
+#                 working_idx = i
+#                 break
 
-        if 90 in [A,B,C]:
-            pass
+#         if 90 in [A,B,C]:
+#             pass
 
-        wside = self.sides[working_idx]
-        wangle = self.angles[working_idx]
+#         wside = self.sides[working_idx]
+#         wangle = self.angles[working_idx]
 
-        self.angles.pop(working_idx)
-        self.sides.pop(working_idx)
+#         self.angles.pop(working_idx)
+#         self.sides.pop(working_idx)
 
-        los_const = sin(wangle,measure)/wside
+#         los_const = sin(wangle,measure)/wside
 
-        for _ in range(3):
-            for i in range(2):
-                if self.angles[i] and self.sides[i] is None:
-                    self.sides[i] = sin(self.angles[i],measure)/los_const
+#         for _ in range(3):
+#             for i in range(2):
+#                 if self.angles[i] and self.sides[i] is None:
+#                     self.sides[i] = sin(self.angles[i],measure)/los_const
 
-                elif self.angles[i] is None and self.sides[i]:
-                    self.angles[i] = arcsin((los_const*self.sides[i]), measure)
+#                 elif self.angles[i] is None and self.sides[i]:
+#                     self.angles[i] = arcsin((los_const*self.sides[i]), measure)
 
-            if self.angles.count(None) ==1:
-                idx = [0,1].remove(self.angles.index(None))
-                self.angles[self.angles.index(None)] = 180-wangle-self.angles[idx[0]]
+#             if self.angles.count(None) ==1:
+#                 idx = [0,1].remove(self.angles.index(None))
+#                 self.angles[self.angles.index(None)] = 180-wangle-self.angles[idx[0]]
 
-        self.angles.insert(working_idx,wangle)
-        self.sides.insert(working_idx, wside)
+#         self.angles.insert(working_idx,wangle)
+#         self.sides.insert(working_idx, wside)
 
-        self.A = self.angles[0]
-        self.B = self.angles[1]
-        self.C = self.angles[2]
-        self.a = self.sides[0]
-        self.b = self.sides[1]
-        self.c = self.sides[2]
+#         self.A = self.angles[0]
+#         self.B = self.angles[1]
+#         self.C = self.angles[2]
+#         self.a = self.sides[0]
+#         self.b = self.sides[1]
+#         self.c = self.sides[2]
 
 
 
