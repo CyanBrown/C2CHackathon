@@ -60,8 +60,6 @@ class Triangle:
             if self.angles[ang] is not None:
                 angle_size+=self.angles[ang]
 
-        print(angle_size)
-
         if angle_size >= 180:
             if self.angles.count(None)>=1:
                 self.error_code = "invalid"
@@ -71,10 +69,11 @@ class Triangle:
                 self.error_code  = "invalid"
                 return
 
-        if self.angles.count(None) == 2:
-            l = self.angles
+        if self.angles.count(None) == 1:
+            idx = self.angles.index(None)
+            l = self.angles.copy()
             l.remove(None)
-            self.angles[self.angles.index(None)] = 180 - math.fsum(l)
+            self.angles[idx] = 180 - math.fsum(l)
 
         if base and height:
             self.area = base*height*.5
@@ -97,13 +96,17 @@ class Triangle:
 
         los_const = sin(wangle,measure)/wside
 
-        for _ in range(2):
+        for _ in range(3):
             for i in range(2):
                 if self.angles[i] and self.sides[i] is None:
                     self.sides[i] = sin(self.angles[i],measure)/los_const
 
                 elif self.angles[i] is None and self.sides[i]:
                     self.angles[i] = arcsin((los_const*self.sides[i]), measure)
+
+            if self.angles.count(None) ==1:
+                idx = [0,1].remove(self.angles.index(None))
+                self.angles[self.angles.index(None)] = 180-wangle-self.angles[idx[0]]
 
         self.angles.insert(working_idx,wangle)
         self.sides.insert(working_idx, wside)
