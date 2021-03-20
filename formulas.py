@@ -1,5 +1,5 @@
 import math
-
+from trigFuncs import *
 
 class CircleSphere:
     def __init__(self, radius):
@@ -45,12 +45,75 @@ class NthPolygon:
 
 
 class Triangle:
-    def __init__(self, base=None, height=None, A=None, B=None, C=None, a=None, b=None, c=None):
+    def __init__(self, measure, base=None, height=None, A=None, B=None, C=None, a=None, b=None, c=None):
+        self.error_code = "valid"
+
         self.base = base
         self.height = height
-        self.A = A
-        self.B = B
-        self.C = C
-        self.a = a
-        self.b = b
-        self.c = c
+
+        self.angles = [A,B,C]
+        self.sides = [a,b,c]
+
+        angle_size = 0
+
+        for ang in range(len(self.angles)):
+            if self.angles[ang] is not None:
+                angle_size+=self.angles[ang]
+
+        print(angle_size)
+
+        if angle_size >= 180:
+            if self.angles.count(None)>=1:
+                self.error_code = "invalid"
+                return
+
+            elif angle_size>180:
+                self.error_code  = "invalid"
+                return
+
+        if self.angles.count(None) == 2:
+            l = self.angles
+            l.remove(None)
+            self.angles[self.angles.index(None)] = 180 - math.fsum(l)
+
+        if base and height:
+            self.area = base*height*.5
+
+        working_idx = 0
+
+        for i in range(3):
+            if self.angles[i] and self.sides[i]:
+                working_idx = i
+                break
+
+        if 90 in [A,B,C]:
+            pass
+
+        wside = self.sides[working_idx]
+        wangle = self.angles[working_idx]
+
+        self.angles.pop(working_idx)
+        self.sides.pop(working_idx)
+
+        los_const = sin(wangle,measure)/wside
+
+        for _ in range(2):
+            for i in range(2):
+                if self.angles[i] and self.sides[i] is None:
+                    self.sides[i] = sin(self.angles[i],measure)/los_const
+
+                elif self.angles[i] is None and self.sides[i]:
+                    self.angles[i] = arcsin((los_const*self.sides[i]), measure)
+
+        self.angles.insert(working_idx,wangle)
+        self.sides.insert(working_idx, wside)
+
+        self.A = self.angles[0]
+        self.B = self.angles[1]
+        self.C = self.angles[2]
+        self.a = self.sides[0]
+        self.b = self.sides[1]
+        self.c = self.sides[2]
+
+
+
